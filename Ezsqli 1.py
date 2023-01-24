@@ -26,7 +26,7 @@ def get_database(url,strings):
     print('结束')
 
 if __name__ == '__main__':
-    url = 'http://dd32a85d-4f80-4cbe-a490-44575a952918.node4.buuoj.cn:81/index.php'
+    url = 'http://e2df23b3-84f5-44e4-9eba-3134fe22b56e.node4.buuoj.cn:81/index.php'
     #不要修改string的顺序，是按asii码排列的，最后获取flag会用到
     strings = '-./0123456789:;<>=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~#'
     get_database(url,strings)
