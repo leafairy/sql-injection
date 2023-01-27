@@ -148,12 +148,6 @@ def GetDBColumns(url,DBName,DBTables):
             print(f"表{DBTables}字段数为{DBColumnCount}")
 
 
-    
-
-
-
-
-
 
 
 if __name__ == '__main__':
