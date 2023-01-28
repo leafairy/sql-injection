@@ -79,3 +79,6 @@ for red in range(100):
             if red+white==25 and white+black==31 and red+black==28:
                 print('red:',red,'white:',white,'black:',black)
                 break
+print(1)
+print(2)
+print(3)
