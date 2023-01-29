@@ -64,7 +64,7 @@ while True:
             username += chr(c)
             print(username)
             # break
-        subs+=1
+    subs+=1
     time.sleep(0.05)
 
 
